@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Rules;
+
+use Illuminate\Contracts\Validation\Rule;
+
+class ValidServiceTime implements Rule
+{
+    private static string $startTime = '09:00:00';
+    private static string $endTime = '21:00:00';
+
+    /**
+     * Create a new rule instance.
+     *
+     * @return void
+     */
+    public function __construct(private string $serviceTime, private string $duration)
+    {
+        //
+    }
+
+    /**
+     * Determine if the validation rule passes.
+     *
+     * @param string $attribute
+     * @param mixed $value
+     * @return bool
+     */
+    public function passes($attribute, $value)
+    {
+        return
+            ($this->duration != 0 and $this->serviceTime != 0)
+            and
+            strtotime(sum_to_time($this->serviceTime, $this->duration)) <= strtotime(self::$endTime)
+            and
+            $this->notReserved();
+    }
+
+    public static function notReserved(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string
+     */
+    public function message()
+    {
+        return $this->duration != 0 ?
+            'در زمان انتخاب شده قادر به انجام خدمت مورد نظر نمی باشیم' :
+            'بدون انتخاب سرویس قادر به بررسی نمی باشیم';
+    }
+
+}

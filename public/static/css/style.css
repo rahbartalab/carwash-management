@@ -1,0 +1,76 @@
+@font-face {
+    font-family: bfont;
+    src: url("../fonts/PeydaWeb-Black.woff2");
+}
+
+@font-face {
+    font-family: rfont;
+    src: url("../fonts/PeydaWeb-Regular.woff");
+}
+
+@font-face {
+    font-family: sbfont;
+    src: url("../fonts/PeydaWeb-SemiBold.woff");
+}
+
+.rfont {
+    font-family: rfont, serif;
+}
+
+.sbfont {
+    font-family: sbfont, serif;
+}
+
+.bfont {
+    font-family: bfont, serif;
+}
+
+* {
+    font-family: rfont, serif;
+}
+
+/*Hamburger Menu */
+.hamburger {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    transition: all 0.25s;
+    position: relative;
+}
+
+.hamburger-top,
+.hamburger-middle,
+.hamburger-bottom {
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    top: 0;
+    left: 0;
+    background: black;
+    transform: rotate(0);
+    transition: all 0.5s;
+}
+
+.hamburger-middle {
+    transform: translateY(7px);
+}
+
+.hamburger-bottom {
+    transform: translateY(14px);
+}
+
+.open {
+    transform: rotate(90deg) translateY(0px);
+}
+
+.open .hamburger-top {
+    transform: rotate(45deg) translateY(6px) translate(6px);
+}
+
+.open .hamburger-middle {
+    display: none;
+}
+
+.open .hamburger-bottom {
+    transform: rotate(-45deg) translateY(6px) translate(-6px);
+}

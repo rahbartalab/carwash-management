@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateInvoiceRequest;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Nette\Schema\ValidationException;
 
 class InvoiceController extends Controller
@@ -26,8 +27,6 @@ class InvoiceController extends Controller
     public function store(CreateInvoiceRequest $request)
     {
         $attributes = $request->validated();
-        dd($attributes);
-
 
     }
 

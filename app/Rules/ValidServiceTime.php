@@ -34,7 +34,8 @@ class ValidServiceTime implements Rule
         return
             ($this->duration != 0 and $this->serviceTime != 0)
             and
-            strtotime(date('H:i:s', time() + 5 * 60)) <= strtotime($this->serviceTime)
+            (strtotime(date('H:i:s', time() + 5 * 60)) <= strtotime($this->serviceTime)
+                or date('Y:m:d') != request('date'))
             and
             strtotime(sum_to_time($this->serviceTime, $this->duration)) <= strtotime(self::$endTime)
             and

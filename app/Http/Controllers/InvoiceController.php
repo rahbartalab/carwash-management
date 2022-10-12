@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateInvoiceRequest;
+use App\Http\Requests\EditInvoiceRequest;
 use App\Models\Invoice;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -57,16 +58,25 @@ class InvoiceController extends Controller
 
     public function edit($id)
     {
-        //
+        return view('invoices.edit', [
+            "invoice" => Invoice::find($id),
+            "services" => Service::all()
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(EditInvoiceRequest $request, $id)
     {
-        //
+        $attributes = $request->validated();
+        $attributes['end_time'] = Service::getEndTime($attributes['start_time']);
+        Invoice::find(request('id'))->update($attributes);
+
+
+        return back();
     }
 
     public function destroy($id)
     {
-        //
+        Invoice::destroy($id);
+        return redirect('/');
     }
 }

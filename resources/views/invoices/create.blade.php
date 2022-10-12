@@ -54,9 +54,18 @@
                                             <select id="service_type"
                                                     name="service_type"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 outline-none focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                <option value="0" selected>نوع سرویس دهی</option>
-                                                <option value="1">سریع ترین زمان ممکن</option>
-                                                <option value="2">انتخاب فردی</option>
+                                                <option
+                                                    {{ old('service_type') == '0' ? 'selected' : '' }} value="0"
+                                                    selected>نوع سرویس دهی
+                                                </option>
+                                                <option
+                                                    {{ old('service_type') == '1' ? 'selected' : '' }} value="1">
+                                                    سریع ترین زمان ممکن
+                                                </option>
+                                                <option
+                                                    {{ old('service_type') == '2' ? 'selected' : '' }} value="2">
+                                                    انتخاب فردی
+                                                </option>
                                             </select>
 
                                             {{--                                            TIME SECTION --}}
@@ -68,10 +77,10 @@
                                                         class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                         id="name"
                                                         placeholder="زمان مراجعه مثال : 20:15"
-                                                        name="time"
-                                                        value="{{ old('time') }}"
+                                                        name="start_time"
+                                                        value="{{ old('start_time') }}"
                                                     />
-                                                    @error('time')
+                                                    @error('start_time')
                                                     <p class="text-xs text-red-500 my-2 mx-1">
                                                         {{ $message }}
                                                     </p>
@@ -196,7 +205,8 @@
         const submitButton = $('#submit_button');
         const timeSection = $('#time_section');
 
-        $(submitButton).attr('disabled', 'disabled');
+        if (serviceType.val() === '0')
+            $(submitButton).attr('disabled', 'disabled');
 
         $(serviceType).on('change', function () {
             if (serviceType.val() === '0') {

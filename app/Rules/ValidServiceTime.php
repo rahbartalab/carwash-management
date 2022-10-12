@@ -2,7 +2,10 @@
 
 namespace App\Rules;
 
+use App\Models\Invoice;
+use App\Models\Service;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class ValidServiceTime implements Rule
 {
@@ -36,10 +39,15 @@ class ValidServiceTime implements Rule
             $this->notReserved();
     }
 
-    public static function notReserved(): bool
+    public function notReserved(): bool
     {
-        return true;
+        $date = request('date');
+        $startTime = request('start_time');
+        $endTime = Service::getEndTime($startTime);
+
+        return Invoice::countOfConflictedInvoice($date, $startTime, $endTime) <= 1;
     }
+
 
     /**
      * Get the validation error message.
@@ -50,7 +58,7 @@ class ValidServiceTime implements Rule
     {
         return $this->duration != 0 ?
             'در زمان انتخاب شده قادر به انجام خدمت مورد نظر نمی باشیم' :
-            'بدون انتخاب سرویس قادر به بررسی نمی باشیم';
+            'بدون انتخاب سرویس و تاریخ قادر به بررسی نمی باشیم';
     }
 
 }

@@ -11,3 +11,9 @@ function overFlow(string $endTime): bool
 {
     return strtotime($endTime) > strtotime('21:00:00');
 }
+
+
+function generateCode(string $startTime, string $date): string
+{
+    return strtotime($startTime) . strtotime($date) . time();
+}

@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home');
 Route::resource('invoices', InvoiceController::class);
-
+Route::get('/track-order', [\App\Http\Controllers\OrderTrackingController::class, 'index']);
+Route::post('/track-order', [\App\Http\Controllers\OrderTrackingController::class, 'attempt']);

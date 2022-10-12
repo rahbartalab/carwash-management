@@ -15,11 +15,13 @@ return new class extends Migration {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('service_id')->references('id')->on('services');
+            $table->string('name');
             $table->string('phone')->unique();
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
             $table->tinyInteger('status')->default(1);
+            $table->string('code')->unique();
             $table->timestamps();
         });
     }

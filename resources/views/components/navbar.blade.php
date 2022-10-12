@@ -11,7 +11,7 @@
         <div class="hidden md:flex gap-5">
             <a href="" class="hover:text-gray-700">درباره ما</a>
             <a href="/invoices/create" class="hover:text-gray-700">ثبت سفارش</a>
-            <a href="" class="hover:text-gray-700">پیگیری سفارش</a>
+            <a href="/track-order" class="hover:text-gray-700">پیگیری سفارش</a>
             <a href="" class="hover:text-gray-700">شرکت ها</a>
             <a href="" class="hover:text-gray-700">مراجعه حضوری</a>
         </div>
@@ -41,7 +41,7 @@
           left-6 right-6 drop-shadow-md">
             <a href="" class="hover:text-gray-700">درباره ما</a>
             <a href="/invoices/create" class="hover:text-gray-700">ثبت سفارش</a>
-            <a href="" class="hover:text-gray-700">پیگیری سفارش</a>
+            <a href="/track-order" class="hover:text-gray-700">پیگیری سفارش</a>
             <a href="" class="hover:text-gray-700">شرکت ها</a>
             <a href="" class="hover:text-gray-700">مراجعه حضوری</a>
         </div>

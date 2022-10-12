@@ -43,19 +43,31 @@ class Invoice extends Model
 
     public static function countOfConflictedInvoice(string $date, string $startTime, string $endTime): int
     {
+
         /* write a query for request to DB and check invoices have conflict in this time */
-        return DB::table('invoices')
+        $query = DB::table('invoices')
             ->where("date", $date)
             ->where(fn($query) => $query
                 ->whereRaw("'$startTime' BETWEEN  start_time and end_time")
-                ->orWhereRaw("start_time BETWEEN '$startTime' and '$endTime'")
-            )->get()->count();
+                ->orWhereRaw("start_time BETWEEN '$startTime' and '$endTime'"));
+
+        if (request('id')) {
+            $query->where('id', '!=', request('id'));
+        }
+
+        return $query->get()->count();
     }
 
-    public static function findNearestTime(array $attributes)
+    public function service()
     {
+        return $this->belongsTo(Service::class);
+    }
+
+    public static function findNearestTime(array $attributes): array
+    {
+        date_default_timezone_set('Iran');
         $date = date('Y-m-d');
-        $start_time = '09:00:00';
+        $start_time = date('H:i:s', round(time() / 300) * 300);
         $nDay = 1;
 
 

@@ -31,12 +31,9 @@ class Service extends Model
 {
     use HasFactory;
 
-    private static string $startTime = '09:00:00';
-    private static string $endTime = '21:00:00';
-
-
-
-
-
+    public static function getEndTime(string $startTime): string
+    {
+        return sum_to_time($startTime, Service::find(request('service_id'))->duration);
+    }
 }
 

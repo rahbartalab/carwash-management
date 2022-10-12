@@ -30,13 +30,12 @@ class CreateInvoiceRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:2', 'max:255'],
-            'phone' => ['required', new Length(11), new PhoneNumber()],
+            'phone' => ['required', new Length(11), new PhoneNumber(), 'unique:invoices,phone'],
             'date' => $this->getDateRules(),
-            'time' => $this->getTimeRules(),
+            'start_time' => $this->getTimeRules(),
             'service_id' => ['required']
         ];
     }
-
 
 
     public function getDateRules(): array
@@ -57,7 +56,7 @@ class CreateInvoiceRequest extends FormRequest
                 'required',
                 new InvoiceTime(),
                 new ValidServiceTime(
-                    request('time') ?? '0', Service::find(request('service_id')) != null ?
+                    request('start_time') ?? '0', Service::find(request('service_id')) != null ?
                     Service::find(request('service_id'))->duration : '0'
                 )
             ];

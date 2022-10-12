@@ -16,6 +16,9 @@
 
 {{ $slot }}
 
+<div style="height: 200px;">
+
+</div>
 
 <footer class="bg-slate-700 text-white mt-64">
     <div class="container flex flex-col-reverse justify-between

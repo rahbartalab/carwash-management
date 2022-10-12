@@ -52,10 +52,16 @@ class Invoice extends Model
             )->get()->count();
     }
 
-    public static function findNearestTime(array $attributes)
+    public function service()
     {
+        return $this->belongsTo(Service::class);
+    }
+
+    public static function findNearestTime(array $attributes): array
+    {
+        date_default_timezone_set('Iran');
         $date = date('Y-m-d');
-        $start_time = '09:00:00';
+        $start_time = date('H:i:s', round(time() / 300) * 300);
         $nDay = 1;
 
 

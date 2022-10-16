@@ -30,7 +30,7 @@ class InvoiceController extends Controller
     public function store(CreateInvoiceRequest $request)
     {
         $attributes = $request->validated();
-
+        $services = Service::all()->whereIn('id', $attributes['services']);
 
         /* select time and date automatically */
         if (request('service_type') === '1') {
@@ -38,11 +38,14 @@ class InvoiceController extends Controller
             $attributes = Invoice::findNearestTime($attributes);
         } /* user select custom time and date */
         else if (request('service_type') === '2') {
-            $attributes['end_time'] = Service::getEndTime($attributes['start_time']);
+            $attributes['end_time'] = getEndTime($attributes['start_time'], $services);
         }
 
         $attributes['code'] = generateCode($attributes['start_time'], $attributes['date']);
+
+
         $invoice = Invoice::create($attributes);
+        saveInvoiceService($services, $invoice);
 
         return redirect("/invoices/$invoice->id")->with('success', true);
     }
@@ -66,11 +69,14 @@ class InvoiceController extends Controller
 
     public function update(EditInvoiceRequest $request, $id)
     {
+
         $attributes = $request->validated();
-        $attributes['end_time'] = Service::getEndTime($attributes['start_time']);
+        $services = Service::all()->whereIn('id', $attributes['services']);
+        $attributes['end_time'] = getEndTime($attributes['start_time'], Service::whereIn('id', $attributes['services'])->get());
         Invoice::find(request('id'))->update($attributes);
 
 
+        saveInvoiceService($services, Invoice::find(request('id')));
         return back();
     }
 

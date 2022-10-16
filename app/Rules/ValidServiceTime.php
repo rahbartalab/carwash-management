@@ -11,13 +11,14 @@ class ValidServiceTime implements Rule
 {
     private static string $startTime = '09:00:00';
     private static string $endTime = '21:00:00';
+    private string $duration = '00:00:00';
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct(private string $serviceTime, private string $duration)
+    public function __construct(private string $serviceTime, private $services)
     {
         //
     }
@@ -31,11 +32,16 @@ class ValidServiceTime implements Rule
      */
     public function passes($attribute, $value)
     {
+
+
+        foreach ($this->services as $service) {
+            $this->duration = sum_to_time($this->duration, $service->duration);
+        }
         return
             ($this->duration != 0 and $this->serviceTime != 0)
             and
             (strtotime(date('H:i:s', time() + 5 * 60)) <= strtotime($this->serviceTime)
-                or date('Y:m:d') != request('date'))
+                or date('Y-m-d') != request('date'))
             and
             strtotime(sum_to_time($this->serviceTime, $this->duration)) <= strtotime(self::$endTime)
             and
@@ -46,7 +52,7 @@ class ValidServiceTime implements Rule
     {
         $date = request('date');
         $startTime = request('start_time');
-        $endTime = Service::getEndTime($startTime);
+        $endTime = sum_to_time($startTime, $this->duration);
 
         return Invoice::countOfConflictedInvoice($date, $startTime, $endTime) <= 1;
     }

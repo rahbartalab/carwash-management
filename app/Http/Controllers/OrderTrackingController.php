@@ -19,8 +19,8 @@ class OrderTrackingController extends Controller
 
         $invoice = Invoice::where('code', $attributes['code'])
             ->where('phone', $attributes['phone'])
-            ->get()
             ->first();
+
 
         return !is_null($invoice)
             ? redirect("/invoices/{$invoice->id}/edit")

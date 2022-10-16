@@ -1,6 +1,5 @@
 <x-layout>
-    @php
-        @endphp
+    @php@endphp
 
     <p class="font-bold text-center mt-7">سفارش شما با کد پیگیری {{ $invoice->code }} در سامانه ثبت شد.</p>
     <div class="flex flex-col gap-3 mx-auto bg-gray-300 w-96 p-3
@@ -29,7 +28,7 @@
             <input type="hidden" value="{{ $invoice->id }}" name="id">
 
             {{--        name --}}
-            <div class="flex justify-between">
+            <div class="flex p-2 justify-between">
                 <div>
                     <p>نام و نام خانوادگی</p>
                 </div>
@@ -45,7 +44,7 @@
 
             </div>
             {{--        phone--}}
-            <div class="flex justify-between border-t p-1 border-t-slate-700">
+            <div class="flex justify-between border-t p-2 border-t-slate-700 ">
                 <div>
                     <p>شماره تماس</p>
                 </div>
@@ -63,20 +62,28 @@
             </div>
 
             {{--        service name --}}
-            <div class="flex justify-between border-t p-1 border-t-slate-700">
+            <div class="flex flex-col gap-2 justify-between border-t p-1 border-t-slate-700">
                 <div>
-                    <p>نام سرویس</p>
+                    <p>سرویس ها</p>
                 </div>
-                <div>
-                    <select name="service_id" id="service" class="w-24 rounded-2xl w-48">
-                        @foreach($services as $service)
-                            <option
-                                class="w-48"
-                                {{ $invoice->service->id == $service->id ? 'selected' : '' }}
-                                value="{{ $service->id }}">{{ $service->name }}</option>
-                        @endforeach
-                    </select>
+                <div class="mr-4">
+                    @foreach($services as $service)
+                        <div class="flex items-center mb-4 gap-2">
+                            <input id="service_{{ $service->id }}"
+                                   type="checkbox"
+                                   value="{{ $service->id }}"
+                                   name="services[]"
+                                   class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300
+                                                                focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800
+                                                                 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                {{ in_array($service->id , $invoice->services->pluck('id')->toArray()) ? 'checked' : '' }}
+                            >
+                            <label for="service_{{ $service->id }}"
+                                   class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $service->name }}</label>
+                        </div>
+                    @endforeach
                 </div>
+
             </div>
             <div class="text-center">
                 @error('service_id')
@@ -136,7 +143,7 @@
                 </div>
 
                 <div>
-                    <p>{{ $invoice->service->cost }} تومان</p>
+                    <p>{{ $invoice->services->sum('cost') }} تومان</p>
                 </div>
             </div>
 

@@ -23,14 +23,19 @@
             </div>
         </div>
         {{--        service name --}}
-        <div class="flex justify-between border-t p-1 border-t-slate-700">
-            <div>
-                <p>نام سرویس</p>
+
+        @foreach($invoice->services as $service)
+
+            <div class="flex justify-between border-t p-1 border-t-slate-700">
+                <div>
+                    <p>نام سرویس</p>
+                </div>
+                <div>
+                    {{ $service->name }}
+                </div>
             </div>
-            <div>
-                {{ $invoice->service->name }}
-            </div>
-        </div>
+
+        @endforeach
         {{--        start time --}}
         <div class="flex justify-between border-t p-1 border-t-slate-700">
             <div>
@@ -65,7 +70,7 @@
             </div>
 
             <div>
-                <p>{{ $invoice->service->cost }} تومان</p>
+                <p>{{ $invoice->services->sum('cost') }} تومان</p>
             </div>
         </div>
 

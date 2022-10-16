@@ -36,9 +36,9 @@ class Service extends Model
         return sum_to_time($startTime, Service::find(request('service_id'))->duration);
     }
 
-    public function invoice()
+    public function invoices()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->belongsToMany(Invoice::class);
     }
 }
 

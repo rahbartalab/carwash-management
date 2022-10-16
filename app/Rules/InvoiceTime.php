@@ -25,7 +25,7 @@ class InvoiceTime implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        return preg_match('/^9|(1[0-9]|20):[0-5][05](:00)?$/', $value);
+        return preg_match('/^09|(1[0-9]|20):[0-5][05](:00)?$/', $value);
     }
 
     /**

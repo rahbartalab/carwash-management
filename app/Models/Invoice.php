@@ -58,9 +58,9 @@ class Invoice extends Model
         return $query->get()->count();
     }
 
-    public function service()
+    public function services()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsToMany(Service::class);
     }
 
     public static function findNearestTime(array $attributes): array
@@ -71,19 +71,15 @@ class Invoice extends Model
         $nDay = 1;
 
 
-        while (is_null($attributes['start_time'])) {
-            $endTime = Service::getEndTime($start_time);
-
+        while (true) {
+            $endTime = getEndTime($start_time, Service::all()->whereIn('id', request('services')));
             /* can't find time today and try find at another day */
             if (overFlow($endTime)) {
                 $start_time = '09:00:00';
-                $date = date('Y-m-d', "+$nDay day");
+                $date = date('Y-m-d', time() + (60 * 60 * 24 * $nDay));
                 $nDay++;
-            }
-
-
-            /* we have empty stage and now we can break */
-            if (Invoice::countOfConflictedInvoice($date, $start_time, $endTime) <= 1) {
+            } /* we have empty stage and now we can break */
+            else if (Invoice::countOfConflictedInvoice($date, $start_time, $endTime) <= 1) {
                 $attributes['start_time'] = $start_time;
                 $attributes['end_time'] = $endTime;
                 $attributes['date'] = $date;
@@ -92,8 +88,6 @@ class Invoice extends Model
 
             $start_time = sum_to_time($start_time, '00:05:00');
         }
-
-
         return $attributes;
     }
 

@@ -33,13 +33,12 @@ class EditInvoiceRequest extends FormRequest
             'name' => ['min:2', 'max:255'],
             'phone' => [new Length(11), Rule::unique('invoices', 'phone')->ignore(request('id')), new PhoneNumber()],
             'date' => ['required', 'date'],
-            'service_id' => ['required'],
+            'services' => ['required'],
             'start_time' => [
                 'required',
                 new InvoiceTime(),
                 new ValidServiceTime(
-                    request('start_time') ?? '0', Service::find(request('service_id')) != null ?
-                    Service::find(request('service_id'))->duration : '0'
+                    request('start_time') ?? '0', Service::all()->whereIn('id', request('services'))
                 )
             ]
         ];

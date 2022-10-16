@@ -33,7 +33,7 @@ class CreateInvoiceRequest extends FormRequest
             'phone' => ['required', new Length(11), new PhoneNumber(), 'unique:invoices,phone'],
             'date' => $this->getDateRules(),
             'start_time' => $this->getTimeRules(),
-            'service_id' => ['required']
+            'services' => ['required']
         ];
     }
 
@@ -56,8 +56,7 @@ class CreateInvoiceRequest extends FormRequest
                 'required',
                 new InvoiceTime(),
                 new ValidServiceTime(
-                    request('start_time') ?? '0', Service::find(request('service_id')) != null ?
-                    Service::find(request('service_id'))->duration : '0'
+                    request('start_time') ?? '0', Service::all()->whereIn('id', request('services'))
                 )
             ];
         }
@@ -66,7 +65,7 @@ class CreateInvoiceRequest extends FormRequest
     public function messages()
     {
         return [
-            'service_id' => 'لطفا سرویس مدنظر خود را وارد کنید'
+            'services' => 'لطفا سرویس مدنظر خود را وارد کنید'
         ];
     }
 }

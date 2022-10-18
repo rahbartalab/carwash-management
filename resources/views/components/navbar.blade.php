@@ -17,10 +17,25 @@
         </div>
 
         {{--        Button--}}
-        <a href="" class="hidden md:block p-3 px-6 pt-2 text-white text-center
+        @if (auth()->guest())
+            <div class="flex gap-2">
+                <a href="/register" class="hidden md:block w-28 p-3 px-6 pt-2 text-white text-center
          bg-slate-700 text-white rounded-full baseline rfont">
-            شروع کنید
-        </a>
+                    ثبت نام
+                </a>
+                <a href="/login" class="hidden md:block p-3 px-6 pt-2 text-white text-center
+         bg-white text-slate-700 w-28 border border-slate-800 rounded-full baseline rfont">
+                    ورود
+                </a>
+            </div>
+        @else
+            <div>
+                <a href="/register" class="hidden md:block w-28 p-3 px-6 pt-2 text-white text-center
+         bg-slate-700 text-white rounded-full baseline rfont">
+                    {{ auth()->user()->name }}
+                </a>
+            </div>
+        @endif
 
         {{--        Hamburger Menu --}}
         <button id="menu-btn" class="block hamburger md:hidden

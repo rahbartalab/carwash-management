@@ -36,6 +36,11 @@ class DatabaseSeeder extends Seeder
         ];
 
         DB::table('services')->insert($services);
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'email' => 'admin@user.com',
+            'password' => \Hash::make('1111')
+        ]);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

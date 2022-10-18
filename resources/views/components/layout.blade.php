@@ -16,11 +16,8 @@
 
 {{ $slot }}
 
-<div style="height: 200px;">
 
-</div>
-
-<footer class="bg-slate-700 text-white mt-64">
+<footer class="bg-slate-700 text-white">
     <div class="container flex flex-col-reverse justify-between
     space-y-8.md:flex-row md:space-y-0 px-6 py-10 mx-auto">
 

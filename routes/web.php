@@ -24,3 +24,8 @@ Route::get('/dashboard', function () {
 require __DIR__ . '/auth.php';
 
 Route::resource('invoices', \App\Http\Controllers\InvoiceController::class);
+Route::get('track-order', [\App\Http\Controllers\OrderTrackingController::class, 'index']);
+Route::post('track-order', [\App\Http\Controllers\OrderTrackingController::class, 'attempt']);
+
+Route::get('requests', [\App\Http\Controllers\InvoiceController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('requests');

@@ -1,5 +1,5 @@
 <x-layout>
-    <div style="height: 250px">
+    <div style="height: 500px">
 
     </div>
 </x-layout>

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'home');
-Route::resource('invoices', InvoiceController::class);
-Route::get('/track-order', [\App\Http\Controllers\OrderTrackingController::class, 'index']);
-Route::post('/track-order', [\App\Http\Controllers\OrderTrackingController::class, 'attempt']);
+Route::get('/', function () {
+    return view('home');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+require __DIR__ . '/auth.php';
+
+Route::resource('invoices', \App\Http\Controllers\InvoiceController::class);
+Route::get('track-order', [\App\Http\Controllers\OrderTrackingController::class, 'index']);
+Route::post('track-order', [\App\Http\Controllers\OrderTrackingController::class, 'attempt']);
+
+Route::get('requests', [\App\Http\Controllers\InvoiceController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('requests');

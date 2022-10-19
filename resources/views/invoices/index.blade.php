@@ -52,33 +52,33 @@
 
 
         <div class="lg:w-3/5 w-full p-5 bg-white rounded-2xl pt-8 shadow shadow-blue-100">
-{{--            <p>تعداد سفارش ها با فیلتر های مدنظر : {{ $invoices->count() }}</p>--}}
-{{--            @forelse($invoices as $invoice)--}}
-{{--                <div class="bg-slate-700 m-3 p-3 rounded-xl text-white flex justify-between border-2 border-white">--}}
-{{--                    <div>--}}
-{{--                        <p>نام درخواست دهنده : {{ $invoice->name }}</p>--}}
-{{--                        <p>شماره تماس : {{ $invoice->phone }}</p>--}}
-{{--                    </div>--}}
+            <p>تعداد سفارش ها با فیلتر های مدنظر : {{ $invoices->count() }}</p>
+            @forelse($invoices as $invoice)
+                <div class="bg-slate-700 m-3 p-3 rounded-xl text-white flex justify-between border-2 border-white">
+                    <div>
+                        <p>نام درخواست دهنده : {{ $invoice->name }}</p>
+                        <p>شماره تماس : {{ $invoice->phone }}</p>
+                    </div>
 
 
-{{--                    <div>--}}
-{{--                        <p>تاریخ مراجعه : {{ $invoice->date }}</p>--}}
-{{--                        <p>زمان شروع : {{ $invoice->start_time }}</p>--}}
-{{--                        <p>زمان پایان : {{ $invoice->end_time }}</p>--}}
-{{--                    </div>--}}
-{{--                    <div>--}}
-{{--                        <p>سرویس ها :</p>--}}
-{{--                        <ul>--}}
-{{--                            @foreach($invoice->services as $service)--}}
-{{--                                <li>{{ $service->name }}</li>--}}
-{{--                            @endforeach--}}
-{{--                        </ul>--}}
-{{--                    </div>--}}
+                    <div>
+                        <p>تاریخ مراجعه : {{ $invoice->date }}</p>
+                        <p>زمان شروع : {{ $invoice->start_time }}</p>
+                        <p>زمان پایان : {{ $invoice->end_time }}</p>
+                    </div>
+                    <div>
+                        <p>سرویس ها :</p>
+                        <ul>
+                            @foreach($invoice->services as $service)
+                                <li>{{ $service->name }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
 
-{{--                </div>--}}
-{{--            @empty--}}
-{{--                <p class="text-center mt-5">درخواستی یافت نشد :(</p>--}}
-{{--            @endforelse--}}
+                </div>
+            @empty
+                <p class="text-center mt-5">درخواستی یافت نشد :(</p>
+            @endforelse
 
         </div>
 

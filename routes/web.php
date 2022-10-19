@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//dd(\App\Models\Invoice::find(2)->user);
+
 Route::get('/', function () {
     return view('home');
 });

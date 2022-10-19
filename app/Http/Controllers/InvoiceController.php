@@ -35,6 +35,8 @@ class InvoiceController extends Controller
         $attributes = $request->validated();
         $services = Service::all()->whereIn('id', $attributes['services']);
 
+        $attributes['user_id'] = auth()->user()->id ?? null;
+
         /* select time and date automatically */
         if (request('service_type') === '1') {
 

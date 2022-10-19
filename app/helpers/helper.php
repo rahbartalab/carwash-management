@@ -13,7 +13,7 @@ function sum_to_time($fTime, $sTime): string
 
 function overFlow(string $endTime): bool
 {
-    return strtotime($endTime) > strtotime('21:00:00');
+    return strtotime($endTime) > strtotime('21:00:00') or strtotime($endTime) < strtotime('09:00:00');
 }
 
 
@@ -48,5 +48,5 @@ function saveInvoiceService($services, $invoice)
 
 function isAdmin(): bool
 {
-    return auth()->user()->email = 'admin@user.com';
+    return auth()->user()->email == 'admin@user.com';
 }

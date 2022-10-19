@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -101,6 +102,25 @@ class Invoice extends Model
             $start_time = sum_to_time($start_time, '00:05:00');
         }
         return $attributes;
+    }
+
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $value ?? $this->user->name
+        );
+    }
+
+    public function phone(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $value ?? $this->user->phone
+        );
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

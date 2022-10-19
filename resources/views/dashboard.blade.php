@@ -1,9 +1,4 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('داشبور شخصی شما') }}
-        </h2>
-    </x-slot>
+<x-layout>
 
     @if (Auth::user()->email != 'admin@user.com')
         <div class="py-12">
@@ -17,4 +12,5 @@
         </div>
     @else @include('admin-dashboard'); @endif
 
-</x-app-layout>
+    <div style="height: 320px"></div>
+</x-layout>

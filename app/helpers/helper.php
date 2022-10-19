@@ -45,3 +45,8 @@ function saveInvoiceService($services, $invoice)
     }
     DB::table('invoice_service')->insert($items);
 }
+
+function isAdmin(): bool
+{
+    return auth()->user()->email = 'admin@user.com';
+}

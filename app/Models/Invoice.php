@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
 /**
@@ -63,11 +64,22 @@ class Invoice extends Model
         return $this->belongsToMany(Service::class);
     }
 
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['service_id'] ?? false, fn($query, $service_id) => $query->whereHas('services', fn($query) => $query->where('service_id', $service_id))
+        );
+
+        $query->when($filters['date'] ?? false, fn($query, $date) => $query->where('date', $date)
+        );
+
+
+    }
+
     public static function findNearestTime(array $attributes): array
     {
         date_default_timezone_set('Iran');
         $date = date('Y-m-d');
-        $start_time = date('H:i:s', round(time() / 300) * 300);
+        $start_time = sum_to_time(date('H:i:s', round(time() / 300) * 300), '01:00:00');
         $nDay = 1;
 
 

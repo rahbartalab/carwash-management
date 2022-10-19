@@ -15,7 +15,10 @@ class InvoiceController extends Controller
 {
     public function index()
     {
+
+
         return view('invoices.index', [
+            "invoices" => Invoice::latest()->filter(request(['service_id', 'date']))->get(),
             "services" => Service::all()
         ]);
     }
@@ -71,9 +74,15 @@ class InvoiceController extends Controller
     {
 
         $attributes = $request->validated();
+        $invoice = Invoice::find(request('id'));
+        if (date('Y-m-d') == $invoice->date) {
+            back()->withErrors(['dateOverFlow' => 'نهایتا تا یک روز قبل از تاریخ مراجعه قادر به ویرایش میباشید !']);
+        }
+
+
         $services = Service::all()->whereIn('id', $attributes['services']);
         $attributes['end_time'] = getEndTime($attributes['start_time'], Service::whereIn('id', $attributes['services'])->get());
-        Invoice::find(request('id'))->update($attributes);
+        $invoice->update($attributes);
 
 
         saveInvoiceService($services, Invoice::find(request('id')));

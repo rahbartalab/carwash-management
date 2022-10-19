@@ -1,4 +1,6 @@
 <x-layout>
+    <x-navbar/>
+
 
     <form action="/invoices" method="post">
         @csrf

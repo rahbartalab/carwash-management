@@ -1,5 +1,5 @@
 <x-layout>
-
+    <x-navbar/>
     <p class="font-bold text-center mt-7">سفارش شما با کد پیگیری {{ $invoice->code }} در سامانه ثبت شد.</p>
     <div class="flex flex-col gap-3 mx-auto bg-gray-300 w-96 p-3
                 rounded-xl mt-3 border border-t-4 border-t-slate-700

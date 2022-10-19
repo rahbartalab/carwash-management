@@ -1,4 +1,5 @@
 <x-layout>
+    <x-navbar/>
     @php@endphp
 
     <p class="font-bold text-center mt-7">سفارش شما با کد پیگیری {{ $invoice->code }} در سامانه ثبت شد.</p>

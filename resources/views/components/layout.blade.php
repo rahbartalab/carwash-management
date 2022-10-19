@@ -11,8 +11,6 @@
     <script src="/static/js/jquery.min.js"></script>
 </head>
 <body>
-<x-navbar/>
-
 
 {{ $slot }}
 

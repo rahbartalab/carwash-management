@@ -1,5 +1,5 @@
 <x-layout>
-
+    <x-navbar/>
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">

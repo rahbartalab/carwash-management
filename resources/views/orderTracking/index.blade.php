@@ -1,5 +1,6 @@
 <x-layout>
 
+    <x-navbar/>
     <form action="/track-order" method="post">
         @csrf
         <div class="w-96 mx-auto mt-5 bg-gray-300 p-5 rounded-xl shadow-2xl border-t-4 border-t-slate-700">

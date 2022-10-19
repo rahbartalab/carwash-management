@@ -15,7 +15,10 @@ class InvoiceController extends Controller
 {
     public function index()
     {
+
+
         return view('invoices.index', [
+            "invoices" => Invoice::latest()->filter(request(['service_id' , 'date']))->get(),
             "services" => Service::all()
         ]);
     }

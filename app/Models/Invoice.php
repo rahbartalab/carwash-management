@@ -66,23 +66,12 @@ class Invoice extends Model
 
     public function scopeFilter($query, array $filters)
     {
-//        dd($filters);
-        $query->when($filters['service_id'] ?? false, fn($query, $service_id) =>
-        $query->whereHas('services' , fn($query) =>
-        $query->where('service_id' , $service_id))
+        $query->when($filters['service_id'] ?? false, fn($query, $service_id) => $query->whereHas('services', fn($query) => $query->where('service_id', $service_id))
         );
 
-        $query->when($filters['date'] ?? false, fn($query, $date) =>
-        $query->where('date' , $date)
+        $query->when($filters['date'] ?? false, fn($query, $date) => $query->where('date', $date)
         );
 
-
-//
-//        $query->when($filters['author'] ?? false, fn($query, $author) =>
-//        $query->whereHas('author', fn($query) =>
-//        $query->where('username', $author)
-//        )
-//        );
 
     }
 
@@ -90,7 +79,7 @@ class Invoice extends Model
     {
         date_default_timezone_set('Iran');
         $date = date('Y-m-d');
-        $start_time = date('H:i:s', round(time() / 300) * 300);
+        $start_time = sum_to_time(date('H:i:s', round(time() / 300) * 300), '01:00:00');
         $nDay = 1;
 
 

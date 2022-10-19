@@ -1,9 +1,10 @@
+<?php /** @var App\Models\Invoice $invoice */ ?>
 <x-layout>
     <x-navbar/>
     @php@endphp
 
     <p class="font-bold text-center mt-7">سفارش شما با کد پیگیری {{ $invoice->code }} در سامانه ثبت شد.</p>
-    <div class="flex flex-col gap-3 mx-auto bg-gray-300 w-96 p-3
+    <div class="flex mb-24 flex-col gap-3 mx-auto bg-gray-300 w-96 p-3
                 rounded-xl mt-3 border border-t-4 border-t-slate-700
                 shadow-2xl">
         <div>
@@ -151,9 +152,13 @@
             @if (strtotime(date('Y:m:d')) < strtotime($invoice->date))
                 <div class="w-96 text-center mt-6 mx-auto">
                     <a href="/track-order">
-                        <button class="bg-slate-700 text-white px-4 py-2 rounded-xl hover:bg-slate-600 transition">
+                        <button id="save"
+                                class="bg-slate-700 text-white px-4 py-2 rounded-xl hover:bg-slate-600 transition">
                             ذخیره تغییرات
                         </button>
+                        @error('dateOverFlow')
+                        <p class="text-xs text-red-600 mx-auto text-center my-5">{{ $message }}</p>
+                        @enderror
                     </a>
                 </div>
             @endif
@@ -161,4 +166,16 @@
     </div>
 
 
+{{--    <script>--}}
+{{--        const saveChangeButton = $('#save');--}}
+{{--    </script>--}}
+
+
+{{--    <?php if (date('Y-m-d') == $invoice->date) { ?>--}}
+
+{{--    <script>--}}
+{{--        saveChangeButton.attr('disabled', 'disabled')--}}
+{{--    </script>--}}
+
+{{--    <?php }  ?>--}}
 </x-layout>

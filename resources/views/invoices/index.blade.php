@@ -12,7 +12,8 @@
 
                     </div>
                     <div>
-                        <select class="w-full p-2 rounded-xl pr-12" name="service_id" aria-label="Default select example">
+                        <select class="w-full p-2 rounded-xl pr-12" name="service_id"
+                                aria-label="Default select example">
                             <option selected value="">سرویس را انتخاب کنید</option>
                             @foreach ($services as $service) {
                             <option
@@ -51,7 +52,8 @@
 
 
         <div class="lg:w-3/5 w-full p-5 bg-white rounded-2xl pt-8 shadow shadow-blue-100">
-            @foreach($invoices as $invoice)
+            <p>تعداد سفارش ها با فیلتر های مدنظر : {{ $invoices->count() }}</p>
+            @forelse($invoices as $invoice)
                 <div class="bg-slate-700 m-3 p-3 rounded-xl text-white flex justify-between border-2 border-white">
                     <div>
                         <p>نام درخواست دهنده : {{ $invoice->name }}</p>
@@ -74,7 +76,9 @@
                     </div>
 
                 </div>
-            @endforeach
+            @empty
+                <p class="text-center mt-5">درخواستی یافت نشد :(</p>
+            @endforelse
 
         </div>
 

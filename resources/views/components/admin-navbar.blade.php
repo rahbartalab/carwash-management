@@ -11,6 +11,7 @@
         <div class="hidden md:flex gap-5">
             <a href="/dashboard" class="hover:text-gray-700">داشبورد</a>
             <a href="/requests" class="hover:text-gray-700">درخواست ها</a>
+            <a href="/users" class="hover:text-gray-700">کاربران</a>
 
         </div>
 
@@ -64,11 +65,10 @@
           items-center self-end py-8 mt-10 hidden
           space-y-6 font-bold bg-white sm:w-auto sm:self-center
           left-6 right-6 drop-shadow-md">
-            <a href="" class="hover:text-gray-700">درباره ما</a>
-            <a href="/invoices/create" class="hover:text-gray-700">ثبت سفارش</a>
-            <a href="/track-order" class="hover:text-gray-700">پیگیری سفارش</a>
-            <a href="" class="hover:text-gray-700">شرکت ها</a>
-            <a href="" class="hover:text-gray-700">مراجعه حضوری</a>
+            <a href="/dashboard" class="hover:text-gray-700">داشبورد</a>
+            <a href="/requests" class="hover:text-gray-700">درخواست ها</a>
+            <a href="/users" class="hover:text-gray-700">کاربران</a>
+
         </div>
     </div>
 </div>

@@ -46,10 +46,13 @@ class InvoiceController extends Controller
             $attributes['end_time'] = getEndTime($attributes['start_time'], $services);
         }
 
+
         $attributes['code'] = generateCode($attributes['start_time'], $attributes['date']);
+        $attributes['cost'] = Service::whereIn('id', $attributes['services'])->sum('cost');
 
 
         $invoice = Invoice::create($attributes);
+
         saveInvoiceService($services, $invoice);
 
         return redirect("/invoices/$invoice->id")->with('success', true);
@@ -84,6 +87,8 @@ class InvoiceController extends Controller
 
         $services = Service::all()->whereIn('id', $attributes['services']);
         $attributes['end_time'] = getEndTime($attributes['start_time'], Service::whereIn('id', $attributes['services'])->get());
+        $attributes['cost'] = Service::whereIn('id', $attributes['services']);
+
         $invoice->update($attributes);
 
 

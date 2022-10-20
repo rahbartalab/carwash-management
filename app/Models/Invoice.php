@@ -48,7 +48,7 @@ class Invoice extends Model
 
         /* write a query for request to DB and check invoices have conflict in this time */
         $query = DB::table('invoices')
-            ->where("date", $date)
+            ->where("date", $date ?? '')
             ->where(fn($query) => $query
                 ->whereRaw("'$startTime' BETWEEN  start_time and end_time")
                 ->orWhereRaw("start_time BETWEEN '$startTime' and '$endTime'"));
@@ -121,6 +121,15 @@ class Invoice extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+
+    public function cost(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->services->sum('cost')
+
+        );
     }
 
 }

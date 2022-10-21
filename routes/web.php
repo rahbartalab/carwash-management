@@ -31,3 +31,4 @@ Route::get('track-order', [\App\Http\Controllers\OrderTrackingController::class,
 Route::post('track-order', [\App\Http\Controllers\OrderTrackingController::class, 'attempt']);
 
 Route::get('requests/{user_id?}', [\App\Http\Controllers\InvoiceController::class, 'index']);
+Route::resource('services', \App\Http\Controllers\ServiceController::class);

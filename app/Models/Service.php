@@ -31,6 +31,9 @@ class Service extends Model
 {
     use HasFactory;
 
+
+    protected $guarded = [];
+
     public static function getEndTime(string $startTime): string
     {
         return sum_to_time($startTime, Service::find(request('service_id'))->duration);

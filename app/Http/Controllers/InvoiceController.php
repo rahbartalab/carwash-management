@@ -81,7 +81,7 @@ class InvoiceController extends Controller
         $attributes = $request->validated();
         $invoice = Invoice::find(request('id'));
         if (date('Y-m-d') == $invoice->date) {
-            back()->withErrors(['dateOverFlow' => 'نهایتا تا یک روز قبل از تاریخ مراجعه قادر به ویرایش میباشید !']);
+            return back()->withErrors(['dateOverFlow' => 'نهایتا تا یک روز قبل از تاریخ مراجعه قادر به ویرایش میباشید !']);
         }
 
 

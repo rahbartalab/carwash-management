@@ -18,7 +18,7 @@ class InvoiceController extends Controller
 
 
         return view('invoices.index', [
-            "invoices" => Invoice::latest()->filter(request(['service_id', 'date']))->get(),
+            "invoices" => Invoice::latest()->filter(request(['service_id', 'date' , 'user_id']))->get(),
             "services" => Service::all()
         ]);
     }
@@ -35,6 +35,8 @@ class InvoiceController extends Controller
         $attributes = $request->validated();
         $services = Service::all()->whereIn('id', $attributes['services']);
 
+        $attributes['user_id'] = auth()->user()->id ?? null;
+
         /* select time and date automatically */
         if (request('service_type') === '1') {
 
@@ -44,10 +46,13 @@ class InvoiceController extends Controller
             $attributes['end_time'] = getEndTime($attributes['start_time'], $services);
         }
 
+
         $attributes['code'] = generateCode($attributes['start_time'], $attributes['date']);
+        $attributes['cost'] = Service::whereIn('id', $attributes['services'])->sum('cost');
 
 
         $invoice = Invoice::create($attributes);
+
         saveInvoiceService($services, $invoice);
 
         return redirect("/invoices/$invoice->id")->with('success', true);
@@ -76,12 +81,14 @@ class InvoiceController extends Controller
         $attributes = $request->validated();
         $invoice = Invoice::find(request('id'));
         if (date('Y-m-d') == $invoice->date) {
-            back()->withErrors(['dateOverFlow' => 'نهایتا تا یک روز قبل از تاریخ مراجعه قادر به ویرایش میباشید !']);
+            return back()->withErrors(['dateOverFlow' => 'نهایتا تا یک روز قبل از تاریخ مراجعه قادر به ویرایش میباشید !']);
         }
 
 
         $services = Service::all()->whereIn('id', $attributes['services']);
         $attributes['end_time'] = getEndTime($attributes['start_time'], Service::whereIn('id', $attributes['services'])->get());
+        $attributes['cost'] = Service::whereIn('id', $attributes['services']);
+
         $invoice->update($attributes);
 
 

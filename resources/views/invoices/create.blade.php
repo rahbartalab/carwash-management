@@ -18,41 +18,49 @@
                                                 src="/static/images/logo.png"
                                                 alt="logo"
                                             />
-                                            <h4 class="text-xl font-semibold mt-1 mb-12 pb-1">به کارشور خوش آمدید</h4>
+
+                                            @if (!auth()->user())
+                                                <h4 class="text-xl font-semibold mt-1 mb-12 pb-1">به کارشور خوش
+                                                    آمدید</h4>
+
+                                            @endif
                                         </div>
                                         <form>
                                             <p class="mb-4">اطلاعات زیر را با دقت کامل کنید</p>
-                                            <div class="mb-4">
-                                                <label class="mb-2 block" for="name">نام و نام خانوادگی</label>
-                                                <input
-                                                    type="text"
-                                                    class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                                    id="name"
-                                                    placeholder="حداقل 2 حرف"
-                                                    name="name"
-                                                    value="{{ old('name') }}"
-                                                />
-                                                @error('name')
-                                                <p class="text-xs text-red-500 my-2 mx-1">
-                                                    {{ $message }}
-                                                </p>
-                                                @enderror
-                                            </div>
-                                            <div class="mb-4">
-                                                <input
-                                                    type="text"
-                                                    class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                                    id="phone"
-                                                    placeholder="شماره موبایل"
-                                                    name="phone"
-                                                    value="{{ old('phone') }}"
-                                                />
-                                                @error('phone')
-                                                <p class="text-xs text-red-500 my-2 mx-1">
-                                                    {{ $message }}
-                                                </p>
-                                                @enderror
-                                            </div>
+                                            @if (!auth()->user())
+                                                <div class="mb-4">
+                                                    <label class="mb-2 block" for="name">نام و نام خانوادگی</label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                        id="name"
+                                                        placeholder="حداقل 2 حرف"
+                                                        name="name"
+                                                        value="{{ old('name') }}"
+                                                    />
+                                                    @error('name')
+                                                    <p class="text-xs text-red-500 my-2 mx-1">
+                                                        {{ $message }}
+                                                    </p>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="mb-4">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                        id="phone"
+                                                        placeholder="شماره موبایل"
+                                                        name="phone"
+                                                        value="{{ old('phone') }}"
+                                                    />
+                                                    @error('phone')
+                                                    <p class="text-xs text-red-500 my-2 mx-1">
+                                                        {{ $message }}
+                                                    </p>
+                                                    @enderror
+                                                </div>
+                                            @endif
                                             <select id="service_type"
                                                     name="service_type"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 outline-none focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">

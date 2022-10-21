@@ -10,10 +10,8 @@
         {{--            Menu Items--}}
         <div class="hidden md:flex gap-5">
             <a href="/dashboard" class="hover:text-gray-700">داشبورد</a>
-            <a href="/requests" class="hover:text-gray-700">درخواست ها</a>
-            <a href="/users" class="hover:text-gray-700">کاربران</a>
-            <a href="/services" class="hover:text-gray-700">بخش ها</a>
-            <a href="/services/create" class="hover:text-gray-700">افزودن بخش جدید</a>
+            <a href="/invoices/create" class="hover:text-gray-700">درخواست جدید</a>
+            <a href="/users" class="hover:text-gray-700">سابقه درخواست های من</a>
 
         </div>
 
@@ -68,8 +66,8 @@
           space-y-6 font-bold bg-white sm:w-auto sm:self-center
           left-6 right-6 drop-shadow-md">
             <a href="/dashboard" class="hover:text-gray-700">داشبورد</a>
-            <a href="/requests" class="hover:text-gray-700">درخواست ها</a>
-            <a href="/users" class="hover:text-gray-700">کاربران</a>
+            <a href="/requests" class="hover:text-gray-700">درخواست جدید</a>
+            <a href="/users" class="hover:text-gray-700">سابقه درخواست های من</a>
 
         </div>
     </div>

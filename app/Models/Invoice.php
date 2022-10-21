@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +48,7 @@ class Invoice extends Model
 
         /* write a query for request to DB and check invoices have conflict in this time */
         $query = DB::table('invoices')
-            ->where("date", $date)
+            ->where("date", $date ?? '')
             ->where(fn($query) => $query
                 ->whereRaw("'$startTime' BETWEEN  start_time and end_time")
                 ->orWhereRaw("start_time BETWEEN '$startTime' and '$endTime'"));
@@ -71,7 +72,8 @@ class Invoice extends Model
 
         $query->when($filters['date'] ?? false, fn($query, $date) => $query->where('date', $date)
         );
-
+        $query->when(request('user_id') ?? false, fn($query, $user_id) => $query->where('user_id', $user_id)
+        );
 
     }
 
@@ -101,6 +103,34 @@ class Invoice extends Model
             $start_time = sum_to_time($start_time, '00:05:00');
         }
         return $attributes;
+    }
+
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $value ?? $this->user->name
+        );
+    }
+
+    public function phone(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $value ?? $this->user->phone
+        );
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+    public function cost(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->services->sum('cost')
+
+        );
     }
 
 }

@@ -78,7 +78,7 @@
     </div>
 
     @if(session('success'))
-        <div class="w-96 text-center mt-6 mx-auto">
+        <div class="w-96 text-center mt-6 mx-auto mb-12">
             <a href="/track-order">
                 <button class="bg-slate-700 text-white px-4 py-2 rounded-xl hover:bg-slate-600 transition">
                     پیگیری سفارش

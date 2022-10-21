@@ -28,13 +28,20 @@ class CreateInvoiceRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => ['required', 'min:2', 'max:255'],
-            'phone' => ['required', new Length(11), new PhoneNumber(), 'unique:invoices,phone'],
+        $rules = [
             'date' => $this->getDateRules(),
             'start_time' => $this->getTimeRules(),
             'services' => ['required']
         ];
+
+        if (!auth()->user()) {
+            $rules = array_merge([
+                'name' => ['required', 'min:2', 'max:255'],
+                'phone' => ['required', new Length(11), new PhoneNumber(), 'unique:invoices,phone'],
+            ], $rules);
+        }
+
+        return $rules;
     }
 
 

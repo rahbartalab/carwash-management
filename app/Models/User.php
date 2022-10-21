@@ -3,9 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -41,6 +43,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $with = ['invoices'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -49,6 +53,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
     ];
     /**
@@ -69,4 +74,51 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function password(): Attribute
+    {
+        return Attribute::make(
+            set: fn($value) => Hash::make($value)
+        );
+    }
+
+    public function activity(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $count = Invoice::where('user_id', $this->id)
+                    ->whereBetween('created_at', [now()->subMonths(3), now()])->count();
+
+
+                if ($count > 5)
+                    return 'green';
+                if ($count >= 2) {
+                    return 'orange';
+                } else return 'red';
+            }
+        );
+    }
+
+    public function activityCount(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return $count = Invoice::where('user_id', $this->id)
+                    ->whereBetween('created_at', [now()->subMonths(3), now()])->count();
+            }
+        );
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function scopeFilter($query)
+    {
+        $query->where('email', '!=', 'admin@user.com');
+
+    }
+
+
 }

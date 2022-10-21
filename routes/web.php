@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//dd(\App\Models\Invoice::find(2)->user);
+
 Route::get('/', function () {
     return view('home');
 });
@@ -24,8 +26,8 @@ Route::get('/dashboard', function () {
 require __DIR__ . '/auth.php';
 
 Route::resource('invoices', \App\Http\Controllers\InvoiceController::class);
+Route::resource('users', \App\Http\Controllers\UserController::class);
 Route::get('track-order', [\App\Http\Controllers\OrderTrackingController::class, 'index']);
 Route::post('track-order', [\App\Http\Controllers\OrderTrackingController::class, 'attempt']);
 
-Route::get('requests', [\App\Http\Controllers\InvoiceController::class, 'index'])
-    ->middleware(['auth', 'verified'])->name('requests');
+Route::get('requests/{user_id?}', [\App\Http\Controllers\InvoiceController::class, 'index']);

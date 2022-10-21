@@ -72,7 +72,8 @@ class Invoice extends Model
 
         $query->when($filters['date'] ?? false, fn($query, $date) => $query->where('date', $date)
         );
-
+        $query->when(request('user_id') ?? false, fn($query, $user_id) => $query->where('user_id', $user_id)
+        );
 
     }
 

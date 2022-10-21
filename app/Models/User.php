@@ -82,6 +82,33 @@ class User extends Authenticatable
         );
     }
 
+    public function activity(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $count = Invoice::where('user_id', $this->id)
+                    ->whereBetween('created_at', [now()->subMonths(3), now()])->count();
+
+
+                if ($count > 5)
+                    return 'green';
+                if ($count >= 2) {
+                    return 'orange';
+                } else return 'red';
+            }
+        );
+    }
+
+    public function activityCount(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return $count = Invoice::where('user_id', $this->id)
+                    ->whereBetween('created_at', [now()->subMonths(3), now()])->count();
+            }
+        );
+    }
+
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
@@ -92,5 +119,6 @@ class User extends Authenticatable
         $query->where('email', '!=', 'admin@user.com');
 
     }
+
 
 }

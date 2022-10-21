@@ -10,12 +10,17 @@
             <p>تعداد کاربران : {{ $users->count() }}</p>
             @forelse($users as $user)
                 <div class="bg-slate-700 m-3 p-3 rounded-xl text-white flex justify-between border-2 border-white">
-                    <div>
-                        <p>نام : {{ $user->name }}</p>
-                        <p>شماره تماس : {{ $user->phone }}</p>
-                        <p>زمان عضویت : {{ $user->created_at->diffForHumans() }}</p>
-                        <p>ایمیل : {{ $user->email }}</p>
-                    </div>
+                    <input type="hidden" id="user_{{ $user->id }}" value="{{ $user->id }}">
+                    <a href="/requests/{{ $user->id }}">
+                        <div
+                            id="show_user_{{ $user->id }}"
+                            class="hover:bg-gray-600 p-3 rounded-xl cursor-pointer">
+                            <p>نام : {{ $user->name }}</p>
+                            <p>شماره تماس : {{ $user->phone }}</p>
+                            <p>زمان عضویت : {{ $user->created_at->diffForHumans() }}</p>
+                            <p>ایمیل : {{ $user->email }}</p>
+                        </div>
+                    </a>
 
                     <div>
                         <p>جمع پرداخت های کاربر : {{ $user->invoices_sum_cost }}</p>
@@ -23,15 +28,16 @@
 
 
                     <div>
-                        <p>  تاریخ اخرین استفاده از خدمات
+                        <p> تاریخ اخرین استفاده از خدمات
                             : {{ $user->invoices->first()->date }}</p>
                         <p> ثبت اخرین درخواست :
                             : {{ $user->invoices->first()->created_at->diffForHumans() }}</p>
                     </div>
                     <div>
-                        <p>میزان فعالیت</p>
-                        <div class="w-12 h-12 bg-white mx-auto mt-2 rounded">
-
+                        <p>میزان فعالیت در سه ماه گذشته </p>
+                        <div class="bg-{{$user->activity}}-500
+                        w-12 h-12 bg-white mx-auto mt-2 rounded flex items-center justify-center">
+                            <p class="text-black">{{ $user->activityCount }}</p>
                         </div>
                     </div>
                 </div>
@@ -44,6 +50,11 @@
 
     </div>
 
+
+    <script>
+
+
+    </script>
     <div style="height: 400px">
     </div>
 </x-layout>

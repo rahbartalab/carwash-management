@@ -12,6 +12,8 @@
             <a href="/dashboard" class="hover:text-gray-700">داشبورد</a>
             <a href="/requests" class="hover:text-gray-700">درخواست ها</a>
             <a href="/users" class="hover:text-gray-700">کاربران</a>
+            <a href="/services" class="hover:text-gray-700">بخش ها</a>
+            <a href="/services/create" class="hover:text-gray-700">افزودن بخش جدید</a>
 
         </div>
 

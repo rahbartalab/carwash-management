@@ -11,6 +11,7 @@
         <div class="hidden md:flex gap-5">
             <a href="/dashboard" class="hover:text-gray-700">داشبورد</a>
             <a href="/invoices/create" class="hover:text-gray-700">درخواست جدید</a>
+            <a href="/users/{{ auth()->user()->id }}/edit" class="hover:text-gray-700">ویرایش پروفایل</a>
             <a href="/users" class="hover:text-gray-700">سابقه درخواست های من</a>
 
         </div>
